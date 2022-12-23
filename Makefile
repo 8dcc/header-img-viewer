@@ -1,6 +1,6 @@
 
 CC=gcc
-CFLAGS=-Wall -Wextra
+CFLAGS=-Wall -Wno-trigraphs
 BIN=header-img-viewer.out
 
 .PHONY: all clean
