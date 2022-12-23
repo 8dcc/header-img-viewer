@@ -1,0 +1,2 @@
+# Don't detect image headers for language detection
+/src/test/* linguist-detectable=false
