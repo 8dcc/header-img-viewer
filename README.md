@@ -13,3 +13,6 @@ $ make
 $ ./header-img-viewer.out
 ...
 ```
+
+### Screenshots
+![img1](https://user-images.githubusercontent.com/29655971/209251963-22920bdf-65f7-443a-89d2-0a373eb7e221.png)
