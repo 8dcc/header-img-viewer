@@ -5,7 +5,10 @@
 #include "SDL.h"
 
 /* TODO: img.c */
+/* Try test/img2.h for different resolution */
 #include "test/img.h"
+
+#define FPS 30
 
 void die(char* s) {
     fprintf(stderr, s);
@@ -33,10 +36,17 @@ int main() {
         die("Error creating a renderer\n");
     }
 
+    printf("Press <Esc> or <q> to exit...\n");
+
+    // Clear screen
     SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
     SDL_RenderClear(sdl_renderer);
 
+    // Save original ptr for restoring it (since the macro is going to alter it)
     char* data_original = header_data;
+
+    // For key events
+    SDL_Event sdl_event;
 
     // Current pixel
     SDL_Rect px;
@@ -47,7 +57,31 @@ int main() {
     unsigned char col[4];
     col[3] = 255;    // Full alpha by default
 
-    for (;;) {
+    int run = 1;
+    while (run) {
+        // Events
+        while (SDL_PollEvent(&sdl_event)) {
+            switch (sdl_event.type) {
+                case SDL_QUIT:
+                    run = 0;
+                    break;
+                case SDL_KEYDOWN:
+                    // Check the pressed key
+                    switch (sdl_event.key.keysym.scancode) {
+                        case SDL_SCANCODE_ESCAPE:
+                        case SDL_SCANCODE_Q:
+                            run = 0;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // Draw eax pixel with the color
         for (px.y = 0; px.y < height; px.y++) {
             for (px.x = 0; px.x < width; px.x++) {
                 // Get the color from the data using macro
@@ -64,8 +98,7 @@ int main() {
         // Send to renderer
         SDL_RenderPresent(sdl_renderer);
 
-        // 1 fps, no need for more
-        SDL_Delay(1000);
+        SDL_Delay(FPS / 1000);
     }
 
     return 0;
