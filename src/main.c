@@ -98,7 +98,7 @@ int main() {
         // Send to renderer
         SDL_RenderPresent(sdl_renderer);
 
-        SDL_Delay(FPS / 1000);
+        SDL_Delay(1000 / FPS);
     }
 
     return 0;
